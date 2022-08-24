@@ -10,15 +10,21 @@ exports.addBook = async (req, res, next) => {
       `https://openlibrary.org/isbn/${isbn}.json`
     );
 
-    const { authors, number_of_pages, title, publish_date } = response.data;
-    const key = authors[0].key;
-    const responsetAuthor = await axios.get(`https://openlibrary.org${key}`);
-    const author = responsetAuthor.data;
+    const { authors, number_of_pages, title, publish_date, publishers } =
+      response.data;
+    console.log(authors, number_of_pages, title, publish_date, publishers);
+    let author = "";
+    if (authors) {
+      const key = authors[0]?.key;
+      const responsetAuthor = await axios.get(`https://openlibrary.org${key}`);
+      author = responsetAuthor.data.name;
+    }
 
+    console.log(author);
     const book = await Book.create({
       title,
       number_of_pages,
-      author: author.name,
+      author: author,
       isbn,
       first_publishing_year: publish_date,
     });
@@ -38,7 +44,7 @@ exports.readBook = async (req, res, next) => {
     const book = await Book.findOne({ isbn });
     if (!book) throw new Error("Book not found");
     book.status = +status;
-    book.save();
+    await book.save();
     res.status(203).json({ status: "success" });
   } catch (error) {
     next(new AppError(error.message, 404));

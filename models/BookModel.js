@@ -9,14 +9,14 @@ const schema = mongoose.Schema({
     unique: true,
   },
   title: { type: String, required: [true, "You must enter title of book"] },
-  author: { type: String, required: [true, "You must enter author of book"] },
+  author: { type: String },
   first_publishing_year: {
     type: String,
     required: [true, "You must published date"],
   },
   number_of_pages: {
     type: Number,
-    required: [true, "You must enter number of pages"],
+    default: null,
   },
   status: { type: Number, default: 0 },
 });
