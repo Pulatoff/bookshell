@@ -1,0 +1,23 @@
+GET http://localhost:2004/add/9780140328721 HTTP/1.1
+
+
+#####
+
+GET https://openlibrary.org/isbn/9780140328721.json HTTP/1.1
+
+
+### 
+
+GET http://localhost:2004/books HTTP/1.1
+
+
+### 
+
+POST http://localhost:2004/read HTTP/1.1
+Content-Type: application/json
+
+
+{
+    "isbn":"9780140328721",
+    "status":1
+}
