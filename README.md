@@ -8,4 +8,4 @@
 # DB_USERNAME=
 # DB_PASSWORD=
 # NODE_ENV=
-# npm start in order to running server
+# npm install and npm start in order to running server
